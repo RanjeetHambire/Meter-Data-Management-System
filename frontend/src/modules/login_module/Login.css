@@ -1,0 +1,14 @@
+.login-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .left-pane {
+    background: linear-gradient(135deg, #003366, #0055a5);
+    color: white;
+  }
+  
+  .right-pane {
+    background-color: #f8f9fa;
+  }
+
+  
