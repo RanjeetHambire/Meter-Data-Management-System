@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Form, Button, Container, Alert } from 'react-bootstrap';
-
-import { Row, Col, Image } from'react-bootstrap';
+import { Form, Button, Container, Alert, Row, Col, Image } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';  // Add useNavigate import
 import './Login.css';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,6 +25,12 @@ const Login = () => {
 
       console.log("Login successful:", response.data);
       setError('');
+
+      // Call the onLogin prop to set the current user in the parent component (App.js)
+      onLogin(response.data);
+
+      // Redirect to the home page
+      navigate('/home');
     } catch (err) {
       setError('Invalid credentials');
     }
@@ -35,13 +41,13 @@ const Login = () => {
       <Row className="vh-100">
         {/* Left Side */}
         <Col md={7} className="left-pane d-flex flex-column justify-content-center align-items-start px-5 text-white">
-          <h1 className="mb-4">Welcome to,
+          <h1 className="mb-4">Welcome to,<br />
           Adani MSEDCL - Meter Data Management System (MDMS)</h1>
           <p style={{ fontSize: '1.2rem' }}>
             Manage contractors, supervisors, and admin accounts securely and efficiently.
           </p>
           <Image
-            src="/maha-image.png" // replace with your actual image path
+            src="/maha-image.png"
             alt="MahaVitaran Illustration"
             fluid
             className="mt-4"

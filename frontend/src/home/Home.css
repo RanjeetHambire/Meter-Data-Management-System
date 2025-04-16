@@ -1,0 +1,20 @@
+.home-page {
+    background: #f4f7fa;
+    min-height: 80vh;
+  }
+  
+  .module-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+  .module-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .nav-style{
+    background-color: white !important;  /* White background */
+    border-bottom: 2px solid #ccc;      /* Border below the navbar */
+    height: 70px;   
+  }
