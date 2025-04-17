@@ -20,6 +20,13 @@ function App() {
     }
   }, [currentUser]);
 
+  // logout functionality 
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem('currentUser');
+  };
+  
   return (
     <Router>
       <Routes>
@@ -40,7 +47,7 @@ function App() {
           path="/home"
           element={
             currentUser ? (
-              <Home currentUser={currentUser} />
+              <Home currentUser={currentUser} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" />
             )
