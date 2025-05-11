@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './modules/login_module/Login';
 import RegisterUser from './modules/login_module/RegisterUser';
 import Home from './home/Home';
+import WfmLayout from './modules/wfm/wfmLayout';
+import ApprovalPage from './modules/wfm/approvalPage';
+import ExcelUploadPage from './modules/wfm/Import_Tab/ExcelUploadPage';
 
 function App() {
   // Check if currentUser is in localStorage (persisted state)
@@ -54,6 +57,19 @@ function App() {
           }
         />
 
+        {/* Route: WFM */}
+        <Route path="/wfm/*" element={ currentUser ? (
+              <WfmLayout currentUser={currentUser} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )}>
+            <Route path="action/approve" element={<ApprovalPage />} />
+            <Route path="import/excel_upload" element={<ExcelUploadPage />} />
+
+
+          </Route>
+
+
         {/* Optional: Route to Register new user (Admins) */}
         {/* <Route
           path="/register"
@@ -65,6 +81,9 @@ function App() {
             )
           }
         /> */}
+
+
+      
       </Routes>
     </Router>
   );

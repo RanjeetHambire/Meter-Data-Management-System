@@ -1,0 +1,20 @@
+
+/* Make gear icon dark */
+.navbar .nav-link svg,
+.navbar .dropdown-toggle svg {
+  color: #212529; /* Bootstrap's dark text color */
+}
+
+/* Hover effect with light square background */
+.navbar .nav-link:hover,
+.navbar .dropdown-toggle:hover,
+.navbar .dropdown-item:hover {
+  background-color: rgba(58, 58, 60, 0.248);
+  border-radius: 15px;
+  transition: background-color 0.2s ease;
+}
+
+/* Remove dropdown arrow */
+.custom-dropdown .dropdown-toggle::after {
+  display: none;
+}
