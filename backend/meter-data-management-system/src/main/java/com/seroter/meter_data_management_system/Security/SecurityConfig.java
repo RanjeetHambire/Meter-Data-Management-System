@@ -34,16 +34,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .cors(Customizer.withDefaults())
-                .csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/users/register").permitAll() // Allow unauthenticated access to /users/register
-                .anyRequest().authenticated() // Require authentication for all other endpoints
-                .and()
-                .httpBasic()
-                .and()
-                .build();
-    }
+       
+    return http
+            .cors(Customizer.withDefaults())
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/users/register", "/api/import/upload").permitAll() // ✅ Permit upload endpoint
+                .anyRequest().authenticated()
+            )
+            .httpBasic(Customizer.withDefaults())
+            .build();
 }
+    }
+
 

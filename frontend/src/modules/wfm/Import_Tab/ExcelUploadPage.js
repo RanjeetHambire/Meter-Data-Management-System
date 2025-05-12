@@ -1,56 +1,70 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-
+import axios from 'axios';
 
 const ExcelUploadPage = () => {
   const [file, setFile] = useState(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setMessage("");
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.name.endsWith('.xlsx')) {
+      setFile(selectedFile);
+      setMessage('');
+    } else {
+      setMessage('Please upload a valid .xlsx file.');
+      setFile(null);
+    }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!file) {
-      setMessage("Please select an Excel file to upload.");
+      setMessage("Please select a file first.");
       return;
     }
 
-    // Simulate upload logic
-    setMessage(`Uploaded: ${file.name}`);
-    // You can integrate actual API upload here later
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      setUploading(true);
+      const res = await axios.post('http://localhost:8080/api/import/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setMessage(res.data.message || 'Upload successful!');
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
-    <Container className="py-5">
-      <h4 className="text-center fw-bold mb-4">Excel Upload</h4>
-
-      <Row className="justify-content-center mb-4">
-        <Col xs={12} md={6}>
-          <Form.Group controlId="formFile">
-            <Form.Label className="fw-bold">Choose Excel File (.xlsx or .csv)</Form.Label>
-            <Form.Control type="file" accept=".xlsx,.xls,.csv" onChange={handleFileChange} />
-          </Form.Group>
-        </Col>
-      </Row>
-
-      <Row className="justify-content-center">
-        <Col xs="auto">
-          <Button variant="primary" onClick={handleUpload} className="fw-bold px-4">
-            Upload
-          </Button>
-        </Col>
-      </Row>
-
-      {message && (
-        <Row className="justify-content-center mt-4">
-          <Col xs="auto">
-            <Alert variant="info" className="text-center">{message}</Alert>
-          </Col>
-        </Row>
-      )}
-    </Container>
+    <div className="container text-center mt-5">
+      <h4 className="fw-bold mb-4">Upload Consumer Excel File</h4>
+      <div className="row justify-content-center mb-3">
+        <div className="col-md-6">
+          <input
+            type="file"
+            accept=".xlsx"
+            onChange={handleFileChange}
+            className="form-control"
+          />
+        </div>
+      </div>
+      <div>
+        <button
+          className="btn btn-primary fw-bold px-4"
+          onClick={handleUpload}
+          disabled={uploading}
+        >
+          {uploading ? 'Uploading...' : 'Upload'}
+        </button>
+      </div>
+      {message && <div className="alert alert-info mt-3">{message}</div>}
+    </div>
   );
 };
 

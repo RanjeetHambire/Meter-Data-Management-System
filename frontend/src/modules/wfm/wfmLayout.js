@@ -46,6 +46,9 @@ const WfmLayout = ({ currentUser, onLogout }) => {
                 <NavDropdown.Item as={Link} to="/wfm/action/reject" className="fw-bold">
                   Allocation
                 </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/wfm/action/meter_allocation" className="fw-bold">
+                  Meter Allocation
+                </NavDropdown.Item>
               </NavDropdown>
 
               {/* Import */}

@@ -7,6 +7,7 @@ import Home from './home/Home';
 import WfmLayout from './modules/wfm/wfmLayout';
 import ApprovalPage from './modules/wfm/approvalPage';
 import ExcelUploadPage from './modules/wfm/Import_Tab/ExcelUploadPage';
+import MeterAllotmentPage from './modules/wfm/action/MeterAllotmentPage';
 
 function App() {
   // Check if currentUser is in localStorage (persisted state)
@@ -65,7 +66,7 @@ function App() {
             )}>
             <Route path="action/approve" element={<ApprovalPage />} />
             <Route path="import/excel_upload" element={<ExcelUploadPage />} />
-
+            <Route path="action/meter_allocation" element={<MeterAllotmentPage />} />
 
           </Route>
 
